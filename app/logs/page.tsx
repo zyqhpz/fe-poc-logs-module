@@ -54,10 +54,11 @@ export default function LogsPage() {
         {tabs.map((tab) => (
           <button
             key={tab.value}
-            className={`px-4 py-2 rounded-md ${selectedTab === tab.value
-              ? "bg-gray-600 text-amber-100"
-              : "bg-gray-100"
-              }`}
+            className={`px-4 py-2 rounded-md ${
+              selectedTab === tab.value
+                ? "bg-gray-600 text-amber-100"
+                : "bg-gray-100"
+            }`}
             onClick={() => setSelectedTab(tab.value)}
           >
             {tab.label}
