@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
+  DialogDescription,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
@@ -206,6 +207,22 @@ export const columns: ColumnDef<LogEntry>[] = [
             setLoading(false);
           }
         };
+
+        const logBox = (key: string, data: any) => (
+          <div className="mb-4" key={key}>
+            <h3 className="mb-2 font-semibold">{key}</h3>
+            <pre className="rounded-md bg-muted p-2 text-xs overflow-x-auto">
+              <SyntaxHighlighter
+                language="json"
+                style={oneDark}
+                wrapLongLines={true}
+              >
+                {JSON.stringify(data ?? {}, null, 2)}
+              </SyntaxHighlighter>
+            </pre>
+          </div>
+        );
+
         return (
           <Dialog>
             <DialogTrigger asChild>
@@ -225,15 +242,44 @@ export const columns: ColumnDef<LogEntry>[] = [
               <DialogHeader>
                 <DialogTitle>Trace Details</DialogTitle>
               </DialogHeader>
+              <DialogDescription>
+                Trace information for Log ID:{" "}
+                <span className="font-bold">{log.id}</span>
+              </DialogDescription>
 
               {!traceData ? (
                 <p className="text-center text-gray-500">
                   No trace data available.
                 </p>
               ) : (
-                <pre className="mt-1 rounded-md bg-muted p-2 text-xs overflow-x-auto">
-                  {JSON.stringify(traceData, null, 2)}
-                </pre>
+                <>
+                  {/* 1️⃣ Always show request_logs first */}
+                  {traceData.data.request_logs &&
+                    logBox("request_logs", traceData.data.request_logs)}
+
+                  {/* 2️⃣ Then third_party_api_logs if exists */}
+                  {traceData.data.third_party_api_logs &&
+                    logBox(
+                      "third_party_api_logs",
+                      traceData.data.third_party_api_logs,
+                    )}
+
+                  {/* 3️⃣ Finally, error_logs */}
+                  {traceData.data.error_logs &&
+                    logBox("error_logs", traceData.data.error_logs)}
+
+                  {/* 4️⃣ Optional: render any other unknown keys */}
+                  {Object.entries(traceData.data)
+                    .filter(
+                      ([key]) =>
+                        ![
+                          "request_logs",
+                          "third_party_api_logs",
+                          "error_logs",
+                        ].includes(key),
+                    )
+                    .map(([key, data]) => logBox(key, data))}
+                </>
               )}
             </DialogContent>
           </Dialog>
