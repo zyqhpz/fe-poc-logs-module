@@ -1,16 +1,16 @@
 "use client"
 
+import { DataTable } from "@/components/data-table"
 import { Button } from "@/components/ui/button"
 import { useEffect, useState } from "react"
 import { columns, Product } from "./columns"
-import { DataTable } from "./data-table"
 
 export default function DemoPage() {
   const [data, setData] = useState<Product[]>([])
   const [page, setPage] = useState(0)
   const [isLoading, setIsLoading] = useState(false)
   const [hasNextPage, setHasNextPage] = useState(true)
-    const [total, setTotal] = useState(0)
+  const [total, setTotal] = useState(0)
   const limit = 10
 
   const fetchData = async (skip: number) => {
@@ -35,7 +35,7 @@ export default function DemoPage() {
     }
   }
 
-    const totalPages = Math.ceil(total / limit)
+  const totalPages = Math.ceil(total / limit)
 
   const handlePageClick = (pageNumber: number) => {
     setPage(pageNumber)
