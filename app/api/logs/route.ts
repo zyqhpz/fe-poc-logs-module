@@ -26,7 +26,7 @@ export async function POST(request: Request) {
   };
 
   // ✅ Include only one search key if provided (invoice_ref / invoice_no / external_invoice_ref)
-  const allowedKeys = ["invoice_ref", "invoice_no", "external_invoice_ref"];
+  const allowedKeys = ["invoice_ref", "invoice_no", "external_invoice_ref", "path"];
   for (const key of allowedKeys) {
     if (searchFilters[key]) {
       payload[key] = searchFilters[key];

@@ -60,6 +60,10 @@ export const columns: ColumnDef<LogEntry>[] = [
     header: "Invoice Ref",
   },
   {
+    accessorKey: "external_invoice_ref",
+    header: "External Invoice Ref",
+  },
+  {
     accessorKey: "level",
     header: "Level",
     cell: ({ row }) => {
