@@ -29,6 +29,7 @@ export type LogEntry = {
   invoice_no: string;
   invoice_ref: string;
   external_invoice_ref: string;
+  process_time_seconds: number;
   level: string;
   service: string;
   response_code: number;
@@ -50,6 +51,10 @@ export const columns: ColumnDef<LogEntry>[] = [
   {
     accessorKey: "path",
     header: "Path",
+  },
+  {
+    accessorKey: "process_time_seconds",
+    header: "Processed Time (s)",
   },
   {
     accessorKey: "invoice_no",
